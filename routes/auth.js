@@ -28,7 +28,8 @@ router.post("/login", async (req, res) => {
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const userDetails = { email: user.email, name: user.username, id: user._id }; 
+  const token = jwt.sign({userDetails }, process.env.JWT_SECRET, { expiresIn: "1h" });
   res.json({ token });
 });
 
@@ -51,7 +52,8 @@ router.post("/google-login", async (req, res) => {
     await user.save();
   }
 
-  const googleToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const userDetails = { email: user.email, name: user.username, id: user._id }; 
+  const googleToken = jwt.sign({ userDetails }, process.env.JWT_SECRET, { expiresIn: "1h" });
   res.json({ token: googleToken });
 
 });
