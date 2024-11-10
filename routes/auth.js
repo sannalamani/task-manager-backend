@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Invalid credentials" });
   }
   const userDetails = { email: user.email, name: user.username, id: user._id }; 
-  const token = jwt.sign({userDetails }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const token = jwt.sign({userDetails }, process.env.JWT_SECRET, { expiresIn: "6h" });
   res.json({ token });
 });
 
@@ -53,7 +53,7 @@ router.post("/google-login", async (req, res) => {
   }
 
   const userDetails = { email: user.email, name: user.username, id: user._id }; 
-  const googleToken = jwt.sign({ userDetails }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const googleToken = jwt.sign({ userDetails }, process.env.JWT_SECRET, { expiresIn: "6h" });
   res.json({ token: googleToken });
 
 });
